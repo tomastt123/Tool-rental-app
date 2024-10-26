@@ -1,14 +1,18 @@
-const nextJest = require("next/jest")
+// jest.config.js
+const nextJest = require('next/jest')
 
 const createJestConfig = nextJest({
-  dir: "./",
+  dir: './', // Path to your Next.js app directory
 })
 
 const customJestConfig = {
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
-  testEnvironment: "jest-environment-jsdom",
-  modulePathIgnorePatterns: ["<rootDir>/dist/"],
-  testPathIgnorePatterns: ["<rootDir>/e2e"],
+  testEnvironment: 'jsdom',
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  moduleNameMapper: {
+    // Handle module aliases
+    '^@/components/(.*)$': '<rootDir>/components/$1',
+  },
+  testPathIgnorePatterns: ['<rootDir>/e2e/'], // Ignore e2e folder for unit tests
 }
 
 module.exports = createJestConfig(customJestConfig)
